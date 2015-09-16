@@ -25,6 +25,14 @@
 \usepackage{tabularx,colortbl} % Advanced table configurations
 \usepackage{fontspec} % Allows font customization
 \usepackage{hyperref} % Allows hyperlinks in pdf documents -- Added by Jake
+\usepackage{ifthen}
+
+\newif\iftwopage
+\ifthenelse{\equal{\detokenize{cv}}{\jobname}}{
+  \twopagefalse
+}{
+  \twopagetrue
+}
 
 \definecolor{linkcolour}{rgb}{0.1,0.3,0.6}
 \hypersetup
@@ -76,12 +84,14 @@
 %----------------------------------------------------------------------------------------
 %	OBJECTIVE
 %----------------------------------------------------------------------------------------
+\iftwopage
+\section{Objective}
+\raggedright
+I am currently looking for a position in the field of hardware design
+using FPGAs, preferably in VHDL and/or with the Altera Quartus
+toolchain. Opportunities for travel would be beneficial.
 
-%\section{Objective}
-
-%A position in the field of computers with interests ranging from
-%hardware design to low-level programming and software engineering.
-
+\fi
 %----------------------------------------------------------------------------------------
 %	WORK EXPERIENCE
 %----------------------------------------------------------------------------------------
@@ -138,18 +148,140 @@ hardware description language to run on an Altera FPGA.
 
 \begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2.5cm}X}
 \grey Period & \textbf{October 2011 -- July 2015}\\
-\grey Degree & \textbf{MEng Electronic and Information Engineering}\\
-%\grey Rank & \textbf{2:1}\\
-\grey University & \textbf{Imperial College London}  (Years~1--3) \hfill London, UK\\
+\grey Qualification & \textbf{MEng Electronic and Information Engineering}\\
+\grey Rank & \textbf{First Class Honours}\\
+\grey Institute & \textbf{Imperial College London}  (Years~1--3) \hfill London, UK\\
 \grey & \textbf{Telecom ParisTech} (Year~4) \hfill Paris, France\\
 %&\hyperref[tab:degree_details]{Details}
+\iftwopage
+& Final year abroad as part of the Erasmus scheme.
+\fi
 \end{tabularx}
 
+\iftwopage
+
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2.5cm}X}
+\grey Period & \textbf{September 2009 -- July 2011}\\
+\grey Qualification & \textbf{A-Levels}\\
+%\grey Rank & \textbf{First Class Honours}\\
+\grey Institute & \textbf{Hymers College} \hfill Kingston-upon-Hull, UK\\
+%&\hyperref[tab:degree_details]{Details}
+& Mathematics A*, Physics A*, Further Maths A, Electronics A
+\end{tabularx}
+
+\fi
 %----------------------------------------------------------------------------------------
 %       PROJECTS
 %----------------------------------------------------------------------------------------
 
 \section{Projects}
+
+\iftwopage
+
+\setlength{\parskip}{0.5em}
+
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2.5cm}X}
+\grey Period & \textbf{May 2012}\\
+\grey Setting & \textbf{First-Year Project} \hfill Imperial College London\\
+\grey Project Title & \textbf{Spacewar!}\\
+\end{tabularx}
+
+Task: With a partner, create a program in Handel-C using the DK Design
+Suite to run on an Altera FPGA which demonstrates Image Processing
+capabilities. Other details are left to the students.
+
+We decided to remake "Spacewar!"​, a very early video game developed
+for the PDP-1 in 1962. The image processing came from the fact that we
+stored certain game images as sprites, and the sprites representing
+the players' ships were rotated on-the-fly before being drawn to the
+screen.
+
+We ran into some problems, such as not being able to reach the fixed
+framerate target, which we solved using our Computer Architecture
+knowledge to create a very rudimentary graphics pipeline.
+
+For this project we received a departmental award for best in the
+year.
+
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2.5cm}X}
+\grey Period & \textbf{July 2013 -- September 2013}\\
+\grey Setting & \textbf{Altera Internship} \hfill Imperial College London\\
+\grey Project Title & \textbf{Air Traffic Management Optimisation}\\
+\end{tabularx}
+
+For this project we were given a C program which used Sequential Monte
+Carlo simulations to provide travel vectors for aircraft. Our task was
+to analyse the code and see how it could be optimised by running on an
+FPGA. The FPGA was provided by Altera, and we were to use Maxeler's
+Maxcompiler Suite for hardware design.
+
+The MaxCompiler suite facilitates writing programs for CPUs with FPGA
+coprocessors, and incorporates a C compiler along with a Java-like
+language for hardware (kernel) design.
+
+Although documentation and support for MaxCompiler were sparse, we
+were able to succeed in designing a kernel to accelerate the most
+CPU-intensive parts of the code.
+
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2.5cm}X}
+\grey Period & \textbf{March 2014}\\
+\grey Setting & \textbf{VHDL and Logic Synthesis course} \hfill Imperial College London\\
+\grey Project Title & \textbf{VHDL Graphics Driver}\\
+\end{tabularx}
+
+Task: To design, implement, and test a logic circuit capable of
+interpreting a predefined list of commands and colouring appropriate
+locations in a pixel buffer. The commands allowed the user to draw
+lines and boxes with a black, white, or inverting brush. The pixel
+buffer was simply a contiguous area of RAM with a 0 representing a
+white pixel and 1 representing black.
+
+The design was split into two parts: the Draw Block which interpreted
+commands and simplified them into a stream of "x, y, colour" commands
+to the RAM Control Block, which took these commands and made the
+appropriate changes in memory.
+
+We also designed a suite of tests to validate the design, exploring
+exhaustive, random, targeted, and constrained random testing
+methodologies.
+
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2.5cm}X}
+\grey Period & \textbf{May 2014 -- July 2014}\\
+\grey Setting & \textbf{3rd Year Industry Group Project} \hfill Imperial College London\\
+\grey Project Title & \textbf{VHDL Floating-Point Unit}\\
+\end{tabularx}
+
+As a group of six, design, implement, and test a VHDL Floating-Point
+Unit (FPU). This project was proposed by a team of engineers from the
+PowerVR Group at Imagination Technologies, and was carried out under
+the scope of the 3rd Year Project in the Electrical and Electronic
+Engineering department at Imperial College.
+
+The six members split into four groups to handle four different
+tasks. While the Design Engineers wrote the VHDL code, the Architect
+wrote bit-equivalent C++ code. This was intended to mimic
+Imagination's own workflow, as they often ship C++ code for clients to
+test.
+
+In addition, the Verification Engineers created testbenches to
+robustly identify flaws in the design, while the Application Engineer
+ensured that the design's projected area, frequency, and energy usages
+fell within expected parameters.
+
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2.5cm}X}
+\grey Period & \textbf{December 2014 -- June 2015}\\
+\grey Setting & \textbf{Master's Thesis} \hfill Telecom Paristech\\
+\grey Project Title & \textbf{Hardware-based Buffer Overflow Protection}\\
+\end{tabularx}
+
+My Master's Thesis explored a hardware-based approach to preventing
+buffer overflow attacks. Using an OpenRISC processor (written in
+Verilog HDL) as a base, I added several hardware registers to the
+Memory Management Unit (MMU) to enable invalidation of sections of
+memory. Inspired by canary values, the CPU was wired to raise an
+exception when invalid memory was accessed, allowing OS intervention.
+
+\else
 \begin{itemize}
   \setlength{\itemsep}{0.3em}%
   \setlength{\parskip}{0em}
@@ -173,6 +305,7 @@ implement a new system providing protection against buffer overflow
 attacks.
 \end{itemize}
 
+\fi
 %----------------------------------------------------------------------------------------
 %	SKILLS
 %----------------------------------------------------------------------------------------
@@ -192,6 +325,17 @@ Windows and Unix-based systems, Office software, Shell scripting, C,
 C++, Python, Lua, Java, Verilog, VHDL, Quartus, ModelSim, Synplify,
 Matlab, \LaTeX, Git.
 \end{flushleft}
+
+\iftwopage
+
+\section{Interests}
+
+\begin{flushleft}
+Graphics, Artificial Intelligence, FPGA Design, Network Security,
+Kendo, Japanese Culture, Video Games
+\end{flushleft}
+
+\fi
 
 %----------------------------------------------------------------------------------------
 

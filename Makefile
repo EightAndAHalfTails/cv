@@ -2,7 +2,8 @@ all: cv.pdf
 
 cv.pdf: cv.tex
 	xelatex cv.tex
-	rm cv.aux cv.log cv.out
+	xelatex --jobname cv2 cv.tex
+#	rm cv.aux cv.log cv.out cv2.aux cv2.log cv2.out
 
 .PHONY: clean
 clean:
